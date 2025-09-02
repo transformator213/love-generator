@@ -14,62 +14,73 @@
     }
     *{box-sizing:border-box}
     html,body{height:100%}
+    html{ -webkit-text-size-adjust: 100%; }
     body{
       margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;
       color:var(--text);
       background: radial-gradient(1200px 600px at 10% -10%, rgba(255,113,198,.15), transparent),
                  radial-gradient(1000px 500px at 110% 10%, rgba(124,245,255,.12), transparent),
                  linear-gradient(160deg, var(--bg1), var(--bg2));
-      display:flex; align-items:center; justify-content:center; padding:24px;
+      display:flex; align-items:center; justify-content:center; padding:20px;
     }
     .card{
-      width:min(920px, 100%);
+      width:min(900px, 100%);
       background: rgba(255,255,255,0.06);
       border:1px solid rgba(255,255,255,0.12);
       backdrop-filter: blur(10px);
-      border-radius:28px; padding:28px; box-shadow: 0 10px 40px rgba(0,0,0,.35);
+      border-radius:24px; padding:24px; box-shadow: 0 10px 40px rgba(0,0,0,.35);
     }
-    .top{display:grid; grid-template-columns: 120px 1fr; gap:20px; align-items:center}
+    .top{display:grid; grid-template-columns: 120px 1fr; gap:16px; align-items:center}
     .avatar{
       width:120px; height:120px; border-radius:50%; object-fit:cover; border:3px solid rgba(255,255,255,.35);
       box-shadow:0 6px 20px rgba(0,0,0,.35);
     }
-    h1{margin:0; font-weight:800; line-height:1.08; font-size:clamp(22px, 4vw, 34px)}
-    .sub{color:var(--muted); margin-top:6px; font-size:15px}
-    .lead{margin:18px 0 10px; font-size:17px; line-height:1.6}
+    h1{margin:0; font-weight:800; line-height:1.15; font-size:clamp(22px, 5vw, 34px)}
+    .sub{color:var(--muted); margin-top:6px; font-size:clamp(13px, 2.8vw, 15px)}
+    .lead{margin:16px 0 10px; font-size:clamp(15px, 3.6vw, 17px); line-height:1.65}
     .highlight{color:var(--accent)}
 
-    .cta{
-      display:flex; flex-wrap:wrap; align-items:center; gap:14px; margin:20px 0 8px;
-    }
+    .cta{display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin:18px 0 8px}
     button#generate{
-      appearance:none; border:none; cursor:pointer; padding:16px 24px; border-radius:16px; font-weight:800; font-size:18px;
+      appearance:none; border:none; cursor:pointer; padding:14px 18px; border-radius:16px; font-weight:800; font-size:clamp(16px, 4.2vw, 18px);
       color:#111; background:
         radial-gradient(60% 160% at 0% 0%, #fff 0%, #ffe5f6 40%, #ffd6f2 60%, #ffc9ee 80%),
         linear-gradient(90deg, #ff71c6, #7cf5ff);
       box-shadow: 0 10px 26px rgba(255,113,198,.35), 0 2px 0 rgba(0,0,0,.18) inset;
       transition: transform .08s ease, box-shadow .2s ease;
     }
-    button#generate:hover{ transform: translateY(-2px) }
+    button#generate:hover{ transform: translateY(-1px) }
     button#generate:active{ transform: translateY(1px); box-shadow: 0 6px 18px rgba(255,113,198,.28), 0 2px 0 rgba(0,0,0,.22) inset }
 
-    .counter{font-size:14px; color:var(--muted)}
+    .counter{font-size:clamp(12px, 3vw, 14px); color:var(--muted)}
 
     .output{
-      margin-top:16px; padding:18px 18px; border-radius:18px; min-height:72px; font-size:20px; line-height:1.5;
+      margin-top:12px; padding:16px; border-radius:18px; min-height:72px; font-size:clamp(16px, 4.2vw, 20px); line-height:1.6;
       background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12);
-      position:relative; overflow:hidden;
+      position:relative; overflow-wrap:anywhere; word-break:break-word;
     }
     .fade{animation:fade .25s ease}
     @keyframes fade{from{opacity:.3; transform:translateY(6px)} to{opacity:1; transform:translateY(0)}}
 
-    .foot{margin-top:18px; font-size:13px; color:var(--muted)}
+    .foot{margin-top:14px; font-size:clamp(12px, 2.8vw, 13px); color:var(--muted)}
 
     .hearts{position:fixed; inset:0; pointer-events:none; overflow:hidden}
     .heart{position:absolute; font-size:18px; animation:floatUp 1.8s ease-out forwards}
     @keyframes floatUp{from{opacity:0; transform:translateY(10px) scale(.8)} 30%{opacity:1} to{opacity:0; transform:translateY(-120px) scale(1.4)}}
 
-    @media (max-width:600px){ .top{grid-template-columns: 86px 1fr} .avatar{width:86px; height:86px} }
+    /* Мобільні покращення */
+    @media (max-width: 640px){
+      body{ padding:14px; }
+      .card{ padding:18px; border-radius:20px; }
+      .top{ grid-template-columns: 72px 1fr; gap:12px; }
+      .avatar{ width:72px; height:72px; }
+      .cta{ gap:10px; }
+      /* на дуже вузьких екранах кнопка на всю ширину */
+      @media (max-width:420px){
+        .cta{ flex-direction:column; align-items:stretch }
+        button#generate{ width:100%; }
+      }
+    }
   </style>
 </head>
 <body>
@@ -84,7 +95,7 @@
     </div>
 
     <p class="lead">
-      Ти нарешті дійшла до мене, і тепер ти можеш отримати свій подарунок на день народження. Передісторія: ти мені постійно кажеш, що я рідко кажу тобі компліменти, тому я вирішив створити інструмент, який назавжди вирішить це питання! Зустрічай: <span class="highlight">Генератор, як признатися в любві дівчині (Версія 1.0)</span>. Він створений спеціально для того, щоб я міг тобі признаватися в любові 24/7 (як ти і просила). Ідея така: як тільки ти відчуєш тривогу або хоч на секунду засумнівашся в моїх почуттях до тебе, просто заходь сюди — і вся тривога зникає. А, і до речі, це не єдиний сюрприз: фінальний сюрприз ти найдеш в кімнаті Антона, за шторами, під ліжком. Надіюсь, тобі сподобається 😊
+      Ти нарешті дійшла до мене, і тепер ти можеш отримати свій подарунок на день народження.n\n\ Передісторія: ти мені постійно кажеш, що я рідко кажу тобі що люблю тебе, тому я вирішив створити інструмент, який назавжди вирішить це питання! n\n\ Зустрічай: <span class="highlight">Генератор, як признатися в любві дівчині (Версія 1.0)</span>. n\Він створений спеціально для того, щоб я міг тобі признаватися в любові 24/7 (як ти і просила). Ідея така: як тільки ти відчуєш тривогу або хоч на секунду засумнівашся в моїх почуттях до тебе, просто заходь сюди — і вся тривога зникає. А, і до речі, це не єдиний сюрприз: фінальний сюрприз ти найдеш в кімнаті Антона, за шторами, під ліжком. Надіюсь, тобі сподобається 😊
     </p>
 
     <div class="cta">
